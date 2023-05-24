@@ -1,0 +1,15 @@
+NSERT INTO Table4 (LXID, [Sum(Table1.interest)], [Sum(Table3.interest)], InterestDifference, [Sum(Table2.Principal)], [Sum(Table3.Principal)], PrincipalDifference)
+SELECT 
+    Table1.LXID,
+    Sum(Table1.Interest) AS [Sum(Table1.interest)],
+    Sum(Table3.Interest) AS [Sum(Table3.interest)],
+    Sum(Table1.Interest) - Sum(Table3.Interest) AS InterestDifference,
+    Sum(Table2.Principal) AS [Sum(Table2.Principal)],
+    Sum(Table3.Principal) AS [Sum(Table3.Principal)],
+    Sum(Table2.Principal) - Sum(Table3.Principal) AS PrincipalDifference
+FROM
+    (Table1
+    LEFT JOIN Table2 ON Table1.LXID = Table2.LXID)
+    LEFT JOIN Table3 ON Table1.LXID = Table3.LXID
+GROUP BY
+    Table1.LXID;
